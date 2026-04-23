@@ -18,6 +18,8 @@ requirements:
   host:
     - pip
     - python
+    - wheel
+    - setuptools
   run:
     - python
     - isodate >=0.6.1
