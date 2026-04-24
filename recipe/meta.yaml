@@ -1,0 +1,52 @@
+{% set name = "azure-ai-projects" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: b5f03024ccf0fd543fbe0f5abcc74e45b15eccc1c71ab87fc71c63061d9fd63c
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<39]
+
+requirements:
+  host:
+    - pip
+    - python
+    - wheel
+    - setuptools
+  run:
+    - python
+    - isodate >=0.6.1
+    - azure-core >=1.30.0
+    - typing-extensions >=4.12.2
+    - azure-storage-blob >=12.15.0
+    - azure-ai-agents >=1.0.0
+
+# Unable to run tests: No azure-devtools -> https://pypi.org/project/azure-devtools
+test:
+  imports:
+    - azure.ai.projects
+    - azure.ai.projects._utils
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/ai/azure-ai-projects
+  summary: Microsoft Azure AI Projects Client Library for Python
+  license: MIT
+  license_file: LICENSE
+  license_family: MIT
+  description: |
+    The AI Projects client library (in preview) is part of the Azure AI Foundry SDK,
+    and provides easy access to resources in your Azure AI Foundry Project
+  dev_url: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/ai/azure-ai-projects
+  doc_url: https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-projects/README.md
+
