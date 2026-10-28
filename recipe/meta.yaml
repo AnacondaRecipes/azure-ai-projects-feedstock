@@ -1,5 +1,5 @@
 {% set name = "azure-ai-projects" %}
-{% set version = "1.0.0" %}
+{% set version = "2.9.0" %}
 
 package:
   name: {{ name }}
@@ -7,26 +7,30 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: b5f03024ccf0fd543fbe0f5abcc74e45b15eccc1c71ab87fc71c63061d9fd63c
+  sha256: f85902b1c220f5ef999f7892d5fa8b6f1efecf867c73b107df7de614f5821fd3
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
     - pip
     - python
     - wheel
-    - setuptools
+    - setuptools >=77.0.3
   run:
     - python
     - isodate >=0.6.1
-    - azure-core >=1.30.0
-    - typing-extensions >=4.12.2
+    - azure-core >=1.37.0
+    - typing-extensions >=4.11
     - azure-storage-blob >=12.15.0
-    - azure-ai-agents >=1.0.0
+    - azure-identity >=1.15.0
+    - openai>=3.0.0
+  run_constrained:
+    - websockets >=13.0
+    - aiohttp >=3.9.0,<4.0.0
 
 # Unable to run tests: No azure-devtools -> https://pypi.org/project/azure-devtools
 test:
